@@ -1,0 +1,18 @@
+- add all answers to list
+- add all elemetns from list to file
+- compare correct answer file with answer file
+- display results and points
+- also generate grade
+
+- compare result to other students
+- time limit?
+
+
+
+compare result with answer
+
+while scanner has next line
+    scanner.nextline = answer string
+    for (answer : lista med svar) {
+         if answer == lista med svar element
+    }
