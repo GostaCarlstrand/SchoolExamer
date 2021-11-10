@@ -1,15 +1,59 @@
 package com.company;
 
+import com.company.Question.Question;
+import com.company.Question.QuestionSetup;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class Teacher {
-    Test test = new Test();
-    String confirmed = "✓";
+    Student student;
+
+    public Teacher(Student student) {
+        this.student = student;
+    }
+
+    public void correctTest() throws IOException {
+        try {
+            ArrayList<String> studentAnswers = student.getStudentAnswers();
+            File studentResult = new File("./student-result/" + student.getName() + "-Test-Result.txt");
+            for (int i = 0; i <= QuestionSetup.listWithQuestionObjects.size(); i++) {
+                FileWriter fileWriter = new FileWriter(studentResult);
+
+                Question currentQuestion = QuestionSetup.listWithQuestionObjects.get(i);
+                String correctAnswer = currentQuestion.getCorrectAnswer();
+                String studentAnswer = studentAnswers.get(i).toUpperCase(Locale.ROOT); //In uppercase letter to easier compare
+                //writeResultToFile(currentQuestion.getQuestionText(), correctAnswer, studentAnswer);
+                fileWriter.write("Question: " + currentQuestion.getQuestionText() + "\n");
+                fileWriter.write("Correct answer: " + correctAnswer + "\n");
+                fileWriter.write("Your answer: " + studentAnswer);
+                if (correctAnswer.startsWith(studentAnswer)) {
+                    fileWriter.write("✓");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void writeResultToFile(String question, String questionAnswer, String studentAnswer) {
+        try {
+            File studentResult = new File("./student-result/" + student.getName() + "-Test-Result.txt");
+            FileWriter fileWriter = new FileWriter(studentResult);
+            fileWriter.write("Question: " + question + "\n");
+            fileWriter.write("Correct answer: " + questionAnswer + "\n");
+            fileWriter.write("Your answer: " + studentAnswer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 
-
-    public void correctTest(String studentName, String subject) {
+    public void correctTest2(String studentName, String subject) {
         try {
             BufferedReader studentAnswer = new BufferedReader(new FileReader("./student-answer/" + studentName+ "-Test-Answers.txt"));
             BufferedReader correctAnswer = new BufferedReader(new FileReader("./correct-answers/" + subject + ".txt"));
@@ -26,7 +70,6 @@ public class Teacher {
                 }
                 else if(lineStudentAnswer.equalsIgnoreCase(lineCorrectAnswer))
                 {
-                    test.increaseCurrentPoints(1);
                 }
 
                 lineStudentAnswer = studentAnswer.readLine();

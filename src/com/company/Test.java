@@ -6,16 +6,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Test {
+    Student student;
     QuestionSetup setupQuestions = new QuestionSetup();
     ArrayList <Question> listWithQuestions;
     private int currentPoints = 0;
-    final int amountOfAlternatives = 6;
-
     ArrayList <String> testAnswer = new ArrayList<>();
+
+    public Test(Student student){
+        this.student = student;
+    }
 
     private ArrayList<Question> collectListWithQuestions(String subject) {
         listWithQuestions = new ArrayList<>
@@ -35,15 +39,21 @@ public class Test {
     public void displayQuestionToTest(String subject, Student student){
         for (Question question:collectListWithQuestions(subject)) {
             System.out.println(question.getQuestionText());
-            saveAnswersToFile(student,Input.answerQuestions());
+            student.addToAnswerList(Input.answerQuestions());
+            //saveAnswersToFile(student,Input.answerQuestions());
         }
+        saveAnswersToFile(student, student.getStudentAnswers());
     }
 
-    public void saveAnswersToFile(Student student, String answer){
+
+    public void saveAnswersToFile(Student student, ArrayList <String> answers){
         File file = new File("./student-answer/" + student.getName()+ "-Test-Answers.txt");
         try {
         FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(answer);
+            for (String answer:answers){
+                fileWriter.write(answer);
+                fileWriter.write("\n");
+            }
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

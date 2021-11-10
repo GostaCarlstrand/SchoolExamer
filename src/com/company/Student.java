@@ -1,19 +1,30 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Student implements StudentInterface{
     Input studentInput = new Input();
     private String name;
     private int age;
-
     private String studentIdNumber = "S";
 
+    private ArrayList <String> studentAnswers = new ArrayList<>();
+
     public Student(){
-        name = nameInput();
+        name = nameInput();     //When a student is created, name and age is required to enter
         age = ageInput();
         generateStudentIdNumber();
     }
+
+    public ArrayList<String> getStudentAnswers() {
+        return studentAnswers;
+    }
+
+    public void addToAnswerList(String answer){
+        studentAnswers.add(answer);
+    }
+
 
     @Override
     public String nameInput() {
@@ -27,7 +38,6 @@ public class Student implements StudentInterface{
             studentIdNumber += randomNumber.nextInt(10);
         }
     }
-
 
     @Override
     public int ageInput() {

@@ -6,12 +6,17 @@ import java.util.ArrayList;
 public class Question {
 
     private String questionText;
+
+
     private String correctAnswer;
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
     }
 
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }

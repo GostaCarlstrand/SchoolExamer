@@ -2,32 +2,34 @@ package com.company;
 
 import com.company.Question.Question;
 
+import java.io.IOException;
+
 public class School {
-    Test test = new Test();
+    Test test;
     Input input = new Input();
     Student student;
-    Teacher teacher = new Teacher();
-    Question question = new Question();
+    Teacher teacher;
 
     final String name = "Harvard Uni";
     final int yearFounded = 1895;
     final String address = "Blackford Rd";
 
 
-    public void takeATest () {
+    public void takeATest () throws IOException {
         student = new Student();
+        teacher = new Teacher(student);
+        test = new Test(student);
         System.out.println("Hi, what test would you like to do?: ");
-        String choosenSubject = input.chooseTest();
-        if (choosenSubject.equalsIgnoreCase("Swedish")) {
+        String chosenSubject = input.chooseTest();
+        if (chosenSubject.equalsIgnoreCase("Swedish")) {
             test.displayQuestionToTest("swedish", student);
+            teacher.correctTest();
 
 
 
-            //test.readTestQuestions("./questions/questions-Swedish.txt");
+
             //test.saveAnswersToFile(student);
         }
-        teacher.correctTest(student.getName(), choosenSubject);
-        teacher.displayTestResult(student.getName(), choosenSubject);
 
     }
 
